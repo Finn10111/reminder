@@ -3,6 +3,7 @@
 <h1>Add reminders to ICS files</h1>
   <form method="POST" action="/" enctype=multipart/form-data>
     <div class="form">
+      {{ form.csrf_token }}
       <ol>
         <li>Select ICS file</li>
         <li>Set reminder time</li>

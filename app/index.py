@@ -1,17 +1,15 @@
-from flask import Flask, render_template, request, send_file
+from flask import Blueprint, render_template, send_file
 from icalendar import Calendar, Alarm
 from flask_wtf import FlaskForm
-#from flask_wtf.file import FileField, FileRequired
-from wtforms import FileField, IntegerField, SubmitField
-from wtforms.validators import InputRequired
+from flask_wtf.file import FileField, FileRequired
+from wtforms import IntegerField, SubmitField
 from wtforms.widgets.html5 import NumberInput
 import tempfile
 
-application = Flask(__name__)
-application.config['SECRET_KEY'] = 'secret'
+index = Blueprint('index', __name__, template_folder='templates')
 
 
-@application.route("/", methods=['GET', 'POST'])
+@index.route("/", methods=['GET', 'POST'])
 def addreminder():
     form = IcsForm()
     content = render_template('index.html', form=form)
@@ -49,7 +47,7 @@ def addreminder():
 
 
 class IcsForm(FlaskForm):
-    icsfile = FileField('ICS File', validators=[InputRequired()])
+    icsfile = FileField('ICS File', validators=[FileRequired()])
     hours = IntegerField('Hours', default=0,
                          widget=NumberInput(step=1, min=0, max=24))
     minutes = IntegerField('Minutes', default=0,
