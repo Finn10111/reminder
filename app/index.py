@@ -3,7 +3,7 @@ from icalendar import Calendar, Alarm
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
 from wtforms import IntegerField, SubmitField
-from wtforms.widgets.html5 import NumberInput
+from wtforms.widgets import NumberInput
 import tempfile
 
 index = Blueprint('index', __name__, template_folder='templates')
@@ -41,7 +41,7 @@ def addreminder():
     new_ics = tempfile.TemporaryFile()
     new_ics.write(calendar.to_ical())
     new_ics.seek(0)
-    new_filename = file.filename.rstrip('.ics')+'_with_reminders'+'.ics'
+    new_filename = file.filename.rstrip('.ics') + '_with_reminders' + '.ics'
     return send_file(new_ics, as_attachment=True,
                      attachment_filename=new_filename)
 
