@@ -25,6 +25,7 @@ def addreminder():
         error = 'can\'t read file'
         return render_template('index.html', form=form, error=error)
 
+    # iterate over every event in ics file
     for component in calendar.walk('VEVENT'):
         valarm_found = False
         for k, v in component.property_items():
