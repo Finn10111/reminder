@@ -35,6 +35,7 @@ def addreminder():
 
         # add alarm if not already set
         if not valarm_found:
+            # add alarms with given times
             alarm = Alarm()
             alarm.add('ACTION', 'DISPLAY')
             alarm.add('DESCRIPTION', component.get('SUMMARY'))
