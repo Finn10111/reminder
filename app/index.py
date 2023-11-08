@@ -20,6 +20,7 @@ def addreminder():
     hours = form.hours.data
     minutes = form.minutes.data
     try:
+        # try to read ics file
         calendar = Calendar.from_ical(file.read())
     except ValueError:
         error = 'can\'t read file'
