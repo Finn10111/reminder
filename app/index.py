@@ -31,6 +31,7 @@ def addreminder():
             if k == 'BEGIN' and v == 'VALARM':
                 valarm_found = True
 
+        # add alarm if not already set
         if not valarm_found:
             alarm = Alarm()
             alarm.add('ACTION', 'DISPLAY')
