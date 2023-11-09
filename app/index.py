@@ -47,7 +47,7 @@ def addreminder():
     new_ics.seek(0)
     new_filename = file.filename.rstrip('.ics') + '_with_reminders' + '.ics'
     return send_file(new_ics, as_attachment=True,
-                     attachment_filename=new_filename)
+                     download_name=new_filename)
 
 
 class IcsForm(FlaskForm):
