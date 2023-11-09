@@ -1,0 +1,21 @@
+name: Python formatting PEP8
+run-name: ${{  gitea.actor }} is running PEP8 check
+on: [push]
+
+jobs:
+  Python-PEP8:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y python3-pip
+          pip install flake8
+
+      - name: Run checking
+        run: |
+          flake8 --extend-exclude bin,lib .
