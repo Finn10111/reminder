@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  matrix:
+    container_name: reminder
+    image: gitea.pimux.de/finn/reminder:latest
+    restart: unless-stopped
+    ports:
+      - ${PORT:-8000}:8000
