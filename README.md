@@ -7,14 +7,14 @@ See it in action at https://reminder.pimux.de
 
 ### Docker
 
-`docker run gitea.pimux.de/finn/reminder:latest`
+`docker run code.f2n.me/finn/reminder:latest`
 
 ### non-Docker
 
 Clone the repo, install Python virtual environment, configure webserver (or use some wsgi server)
 
 ```
-git clone https://gitea.pimux.de/finn/reminder.git reminder
+git clone https://code.f2n.me/finn/reminder.git reminder
 cd reminder
 virtualenv .
 . bin/activate
