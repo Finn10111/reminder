@@ -23,7 +23,7 @@ jobs:
       - name: Log in to the Container registry
         uses: docker/login-action@v2
         with:
-          registry: gitea.pimux.de
+          registry: code.f2n.me
           username: ${{ secrets.MY_GITEA_USERNAME }}
           password: ${{ secrets.MY_GITEA_TOKEN }}
       - name: Build and push to local registry
