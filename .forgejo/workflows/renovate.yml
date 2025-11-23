@@ -1,0 +1,93 @@
+name: Renovate
+
+on:
+  push:
+  schedule:
+    - cron: '*/30 * * * *'
+
+  workflow_dispatch:
+    inputs:
+      args:
+        description: 'Optional renovate args, they replace the defaults and disable autodiscover'
+        required: false
+        type: string
+
+enable-email-notifications: true
+
+env:
+  RENOVATE_DRY_RUN: ${{ ((github.event_name != 'schedule' && github.event_name != 'workflow_dispatch')) && 'full' || '' }} # dry-run on main to eleminate race condition
+  RENOVATE_GIT_PRIVATE_KEY: ${{ secrets.GPG }}
+
+jobs:
+  forgejo:
+    runs-on: docker
+    container:
+      image: data.forgejo.org/renovate/renovate:42.11.0@sha256:656c1e5b808279eac16c37b89562fb4c699e02fc7e219244f4a1fc2f0a7ce367
+      options: --tmpfs /tmp:exec
+
+    steps:
+      - uses: https://data.forgejo.org/actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          show-progress: false
+
+      - name: print node heap
+        run: /usr/local/renovate/node -e 'console.log(`node heap limit = ${require("v8").getHeapStatistics().heap_size_limit / (1024 * 1024)} Mb`)'
+
+      - name: Restore renovate repo cache
+        uses: https://data.forgejo.org/actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: |
+            /tmp/renovate/cache/renovate/repository
+          key: repo-cache-${{ github.run_id }}
+          restore-keys: |
+            repo-cache-
+
+      - name: Restore renovate package cache
+        uses: https://data.forgejo.org/actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: |
+            /tmp/renovate/cache/renovate/renovate-cache-sqlite
+          key: package-cache-${{ github.run_id }}
+          restore-keys: |
+            package-cache-
+
+      - name: Renovate
+        run: |
+          renovate ${{ env.INPUT_ARGS }}
+        env:
+          GITHUB_COM_TOKEN: ${{ secrets.GH_TOKEN }}
+          LOG_LEVEL: debug
+          RENOVATE_ENDPOINT: ${{ github.server_url }}
+          RENOVATE_PLATFORM: forgejo
+          RENOVATE_REPOSITORY_CACHE: 'enabled'
+          RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
+          RENOVATE_GIT_AUTHOR: 'Renovate Bot <bot@code.f2n.me>'
+
+          RENOVATE_X_SQLITE_PACKAGE_CACHE: true
+
+          GIT_AUTHOR_NAME: 'Renovate Bot'
+          GIT_AUTHOR_EMAIL: 'bot@code.f2n.me'
+          GIT_COMMITTER_NAME: 'Renovate Bot'
+          GIT_COMMITTER_EMAIL: 'bot@code.f2n.me'
+
+          INPUT_ARGS: ${{ inputs.args || (github.repository != 'renovate/renovate' && github.repository) || '' }}
+
+          # use direct connection for these domains for renovate go datasource instead of the go proxy
+          # allows faster lookups
+          GONOPROXY: code.forgejo.org
+
+      - name: Save renovate repo cache
+        if: always() && env.RENOVATE_DRY_RUN != 'full'
+        uses: https://data.forgejo.org/actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: |
+            /tmp/renovate/cache/renovate/repository
+          key: repo-cache-${{ github.run_id }}
+
+      - name: Save renovate package cache
+        if: always() && env.RENOVATE_DRY_RUN != 'full'
+        uses: https://data.forgejo.org/actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: |
+            /tmp/renovate/cache/renovate/renovate-cache-sqlite
+          key: package-cache-${{ github.run_id }}
