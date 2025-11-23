@@ -11,6 +11,5 @@ with open(activate_this) as file_:
 from app import create_app
 
 def application(environ, start_response):
-    os.environ['SECRET_KEY'] = environ.get('SECRET_KEY') 
     app = create_app()
     return app(environ, start_response)
