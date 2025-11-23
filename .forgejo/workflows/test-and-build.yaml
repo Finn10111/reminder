@@ -11,13 +11,13 @@ jobs:
   test:
     runs-on: docker
     container:
-      image: node:20
+      image: python:3.13-slim
       options: --tmpfs /tmp:exec
 
     steps:
       - name: Install Node
         run: |
-          apt update && apt install -y python3 python3-venv python3-pip
+          apt update && apt install -y nodejs npm
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
     needs: test
     runs-on: docker
     container:
-      image: node:20
+      image: docker:24.0.6
       options: --privileged
 
     steps:
