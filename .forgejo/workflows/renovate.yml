@@ -61,14 +61,14 @@ jobs:
           RENOVATE_PLATFORM: forgejo
           RENOVATE_REPOSITORY_CACHE: 'enabled'
           RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
-          RENOVATE_GIT_AUTHOR: 'Renovate Bot <bot@code.f2n.me>'
+          RENOVATE_GIT_AUTHOR: 'Renovate Bot <renovate-bot@code.f2n.me>'
 
           RENOVATE_X_SQLITE_PACKAGE_CACHE: true
 
           GIT_AUTHOR_NAME: 'Renovate Bot'
-          GIT_AUTHOR_EMAIL: 'bot@code.f2n.me'
+          GIT_AUTHOR_EMAIL: 'renovate-bot@code.f2n.me'
           GIT_COMMITTER_NAME: 'Renovate Bot'
-          GIT_COMMITTER_EMAIL: 'bot@code.f2n.me'
+          GIT_COMMITTER_EMAIL: 'renovate-bot@code.f2n.me'
 
           INPUT_ARGS: ${{ inputs.args || (github.repository != 'renovate/renovate' && github.repository) || '' }}
 
