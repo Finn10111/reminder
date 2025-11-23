@@ -32,7 +32,7 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: gitea.pimux.de/finn/reminder:latest
+          tags: code.f2n.me/finn/reminder:latest
       - name: Inspect
         run: |
-          docker buildx imagetools inspect gitea.pimux.de/finn/reminder:latest
+          docker buildx imagetools inspect code.f2n.me/finn/reminder:latest
