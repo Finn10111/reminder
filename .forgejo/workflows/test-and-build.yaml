@@ -1,0 +1,66 @@
+name: Test and Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: docker
+    container:
+      image: python:3.13-slim
+      options: --tmpfs /tmp:exec
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Set up Python
+        run: |
+          python -m venv venv
+          . venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-flask
+
+      - name: Run tests
+        run: |
+          . venv/bin/activate
+          pytest -v
+
+
+  build-and-push:
+    needs: test
+    runs-on: docker
+    container:
+      image: docker:24.0.6
+      options: --privileged
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t reminder:latest .
+
+      - name: Login to Forgejo registry
+        env:
+          REGISTRY_USERNAME: ${{ secrets.FORGEJO_USERNAME }}
+          REGISTRY_PASSWORD: ${{ secrets.FORGEJO_PASSWORD }}
+        run: |
+          docker login -u $FORGEJO_USERNAME -p $FORGEJO_PASSWORD code.f2n.me
+
+      - name: Tag and Push Docker image
+        run: |
+          docker tag reminder:latest code.f2n.me/finn/reminder:latest
+          docker push code.f2n.me/finn/reminder:latest

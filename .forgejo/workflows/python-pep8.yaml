@@ -1,5 +1,4 @@
 name: Python formatting PEP8
-run-name: ${{  gitea.actor }} is running PEP8 check
 on: [push]
 
 jobs:
