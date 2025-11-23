@@ -50,6 +50,10 @@ jobs:
       options: --privileged
 
     steps:
+      - name: Install Node
+        run: |
+          apt update && apt install -y nodejs npm
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
