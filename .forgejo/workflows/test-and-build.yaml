@@ -20,7 +20,7 @@ jobs:
           apt update && apt install -y nodejs npm
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Cache pip
         uses: actions/cache@v3
@@ -50,7 +50,7 @@ jobs:
         image: registry:2
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Docker for QEMU
         uses: https://github.com/papodaca/install-docker-action@main
       - name: Set up QEMU
