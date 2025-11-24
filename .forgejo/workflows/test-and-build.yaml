@@ -11,7 +11,7 @@ jobs:
   test:
     runs-on: docker
     container:
-      image: python:3.13-slim
+      image: python:3.14-slim
       options: --tmpfs /tmp:exec
 
     steps:
