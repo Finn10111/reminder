@@ -40,14 +40,16 @@ jobs:
 
   build-and-push:
     needs: test
-    runs-on: docker
+    runs-on: ubuntu-latest
     container:
       image: catthehacker/ubuntu:act-latest
+      options: --privileged
 
     steps:
-      - name: Check Docker
+      - name: Start Docker daemon
         run: |
-          docker --version
+          dockerd &
+          sleep 5
           docker info
 
       - name: Checkout code
