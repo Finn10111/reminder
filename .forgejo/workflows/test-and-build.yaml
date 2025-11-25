@@ -43,9 +43,13 @@ jobs:
     runs-on: docker
     container:
       image: catthehacker/ubuntu:act-latest
-      options: --user root
 
     steps:
+      - name: Check Docker
+        run: |
+          docker --version
+          docker info
+
       - name: Checkout code
         uses: actions/checkout@v4
 
