@@ -40,10 +40,7 @@ jobs:
 
   build-and-push:
     needs: test
-    runs-on: docker
-    container:
-      image: catthehacker/ubuntu:act-latest
-      options: --privileged
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
