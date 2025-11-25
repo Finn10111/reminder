@@ -43,7 +43,6 @@ jobs:
     runs-on: docker
     container:
       image: docker:24.0-dind
-      options: --privileged
     steps:
 
       - name: Install node
