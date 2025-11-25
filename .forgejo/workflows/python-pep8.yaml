@@ -3,7 +3,9 @@ on: [push]
 
 jobs:
   Python-PEP8:
-    runs-on: ubuntu-22.04
+    runs-on: docker
+    container:
+      image: python:3.14-slim
 
     steps:
       - name: Checkout
@@ -11,9 +13,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update
-          apt-get install -y python3-pip
-          pip install flake8
+          pip install flake8 --break-system-packages --root-user-action=ignore
 
       - name: Run checking
         run: |
