@@ -46,6 +46,11 @@ jobs:
       options: --privileged
 
     steps:
+      - name: check docker
+        run: |
+          ls -l /var/run/docker.sock
+          whoami
+
       - name: Install Node.js for actions
         run: |
           apk add --no-cache nodejs npm git
