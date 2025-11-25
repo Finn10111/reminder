@@ -41,6 +41,8 @@ jobs:
   build-and-push:
     needs: test
     runs-on: docker
+    container:
+      image: catthehacker/ubuntu:act-latest
 
     steps:
       - name: Checkout code
