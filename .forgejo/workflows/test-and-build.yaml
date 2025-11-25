@@ -40,17 +40,15 @@ jobs:
 
   build-and-push:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: docker
     container:
-      image: catthehacker/ubuntu:act-latest
+      image: docker:dind
       options: --privileged
 
     steps:
-      - name: Start Docker daemon
+      - name: Install Node.js for actions
         run: |
-          dockerd &
-          sleep 5
-          docker info
+          apk add --no-cache nodejs npm git
 
       - name: Checkout code
         uses: actions/checkout@v4
