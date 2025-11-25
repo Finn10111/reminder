@@ -40,7 +40,7 @@ jobs:
 
   build-and-push:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: docker
 
     steps:
       - name: Checkout code
