@@ -43,7 +43,7 @@ jobs:
     runs-on: docker
     container:
       image: catthehacker/ubuntu:act-latest
-      privileged: true
+      options: --privileged
 
     steps:
       - name: Checkout code
