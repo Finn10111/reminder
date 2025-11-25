@@ -51,12 +51,6 @@ jobs:
           apk update
           apk add nodejs npm git
 
-      - name: Start Docker daemon
-        run: |
-          dockerd-entrypoint.sh &
-          # wait until Docker daemon is ready
-          until docker info >/dev/null 2>&1; do sleep 1; done
-
       - name: Checkout
         uses: actions/checkout@v6
 
