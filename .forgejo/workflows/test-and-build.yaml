@@ -40,7 +40,9 @@ jobs:
 
   build-and-push:
     needs: test
-    runs-on: docker
+    runs-on: ubuntu-latest
+    container:
+      image: catthehacker/ubuntu:act-latest
 
     steps:
       - name: check docker
