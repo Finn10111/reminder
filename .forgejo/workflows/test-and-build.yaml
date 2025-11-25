@@ -41,9 +41,6 @@ jobs:
   build-and-push:
     needs: test
     runs-on: docker
-    container:
-      image: docker:dind
-      options: --privileged
 
     steps:
       - name: check docker
