@@ -42,10 +42,8 @@ jobs:
     needs: test
     runs-on: docker
     container:
-      image: catthehacker/ubuntu:act-latest
-      options: --volume /var/run/docker.sock:/var/run/docker.sock
-      #image: docker:24.0-dind
-      #options: --privileged
+      image: docker:29.0-dind
+      options: --privileged
     steps:
 
       - name: Install node
