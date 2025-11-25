@@ -82,26 +82,27 @@ def test_post_valid_ics_adds_alarm(client):
     assert alarms[0].get("TRIGGER").to_ical() == b"-PT1H15M"
 
 
-# def test_post_valid_ics_with_existing_alarm(client):
-    # """ICS already has an alarm → should not add a duplicate."""
-    # ics = make_simple_ics(with_alarm=True)
+@pytest.mark.skip(reason="Not implemented yet")
+def test_post_valid_ics_with_existing_alarm(client):
+    """ICS already has an alarm → should not add a duplicate."""
+    ics = make_simple_ics(with_alarm=True)
 
-    # data = {
-        # "hours": 2,
-        # "minutes": 30,
-        # "icsfile": (io.BytesIO(ics), "hasalarm.ics")
-    # }
+    data = {
+        "hours": 2,
+        "minutes": 30,
+        "icsfile": (io.BytesIO(ics), "hasalarm.ics")
+    }
 
-    # response = client.post("/", data=data, content_type="multipart/form-data")
-    # assert response.status_code == 200
+    response = client.post("/", data=data, content_type="multipart/form-data")
+    assert response.status_code == 200
 
-    # returned_ics = response.data
-    # cal = Calendar.from_ical(returned_ics)
+    returned_ics = response.data
+    cal = Calendar.from_ical(returned_ics)
 
-    # alarms = [
-        # c for c in cal.walk()
-        # if c.name == "VALARM"
-    # ]
+    alarms = [
+        c for c in cal.walk()
+        if c.name == "VALARM"
+    ]
 
-    # # Should still be exactly 1
-    # assert len(alarms) == 1
+    # Should still be exactly 1
+    assert len(alarms) == 1
