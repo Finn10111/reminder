@@ -8,12 +8,14 @@ jobs:
       image: python:3.14-slim
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
       - name: Install dependencies
         run: |
+          apt-get update
+          apt-get install -y nodejs
           pip install flake8 --break-system-packages --root-user-action=ignore
+
+      - name: Checkout
+        uses: actions/checkout@v6
 
       - name: Run checking
         run: |
