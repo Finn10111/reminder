@@ -54,6 +54,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Start Docker daemon
+        run: |
+          dockerd-entrypoint.sh &
+          # wait until docker daemon is ready
+          until docker info; do sleep 1; done
+
       - name: Enable Buildx
         run: |
           docker buildx create --use
