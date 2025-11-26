@@ -41,9 +41,6 @@ jobs:
   build-and-push:
     needs: test
     runs-on: docker
-    runner:
-      envs:
-        DOCKER_HOST: tcp://dind_container.docker.internal:2375
     container:
       image: catthehacker/ubuntu:act-latest
       volumes:
