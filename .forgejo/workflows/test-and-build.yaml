@@ -43,6 +43,9 @@ jobs:
     runs-on: docker
     container:
       image: catthehacker/ubuntu:act-latest
+      options: --network dind_default
+    env:
+      DOCKER_HOST: tcp://dind_container:2375
 
     steps:
       - name: Set Docker host
