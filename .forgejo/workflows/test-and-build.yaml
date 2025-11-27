@@ -43,9 +43,8 @@ jobs:
     runs-on: docker
     container:
       image: catthehacker/ubuntu:act-latest
-      options: --network dind_default
     env:
-      DOCKER_HOST: tcp://dind_container:2375
+      DOCKER_HOST: tcp://127.0.0.1:2376
 
     steps:
       - name: Checkout code
