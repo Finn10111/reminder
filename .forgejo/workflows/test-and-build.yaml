@@ -48,12 +48,6 @@ jobs:
       DOCKER_HOST: tcp://dind_container:2375
 
     steps:
-      - name: Set Docker host
-        run: |
-          echo "DOCKER_HOST=tcp://dind_container.docker.internal:2375" >> $GITHUB_ENV
-          docker context create dind --docker "host=tcp://dind_container.docker.internal:2375" || true
-          docker context use dind
-
       - name: Checkout code
         uses: actions/checkout@v4
 
