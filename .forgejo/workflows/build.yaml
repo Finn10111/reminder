@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    runs-on: docker
     uses: ./.forgejo/workflows/test.yaml
 
   build-amd64:
