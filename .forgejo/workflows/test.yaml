@@ -5,6 +5,11 @@ on:
     branches:
       - '**'
   pull_request:
+  workflow_call:
+    outputs:
+      success:
+        description: "Test result"
+        value: ${{ jobs.test.result }}
 
 jobs:
   test:
