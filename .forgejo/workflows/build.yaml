@@ -1,20 +1,16 @@
 name: Build
 
 on:
-  workflow_run:
-    workflows: ["Test"]
-    types:
-      - completed
+  push:
     branches:
       - main
       - master
 
+
+
 jobs:
-  check-test-success:
-    runs-on: docker
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    steps:
-      - run: echo "Tests passed, proceeding with build"
+  test:
+    uses: ./.forgejo/workflows/test.yaml
 
   build-amd64:
     needs: check-test-success
