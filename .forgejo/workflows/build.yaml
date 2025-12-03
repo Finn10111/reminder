@@ -6,14 +6,12 @@ on:
       - main
       - master
 
-
-
 jobs:
   test:
     uses: ./.forgejo/workflows/test.yaml
 
   build-amd64:
-    needs: check-test-success
+    needs: test
     runs-on: docker
     container:
       image: catthehacker/ubuntu:act-latest
@@ -42,7 +40,7 @@ jobs:
           tags: code.f2n.me/finn/reminder:latest-amd64
 
   build-arm64:
-    needs: check-test-success
+    needs: test
     runs-on: docker-arm64
     container:
       image: catthehacker/ubuntu:act-latest
