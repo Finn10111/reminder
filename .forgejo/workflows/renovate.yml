@@ -22,7 +22,7 @@ jobs:
   forgejo:
     runs-on: docker
     container:
-      image: data.forgejo.org/renovate/renovate:42.41.1@sha256:f17060f2f42e0eeeb542c8036c28ec412fdef49a27f963f845553297ea85dd51
+      image: data.forgejo.org/renovate/renovate:42.42.0@sha256:7b7528abb2fa6e57fcd62b5c3ac661bfa95cbfcdd76ff5ef1f23c481d73eaea9
       options: --tmpfs /tmp:exec
 
     steps:
