@@ -34,7 +34,7 @@ jobs:
         run: /usr/local/renovate/node -e 'console.log(`node heap limit = ${require("v8").getHeapStatistics().heap_size_limit / (1024 * 1024)} Mb`)'
 
       - name: Restore renovate repo cache
-        uses: https://data.forgejo.org/actions/cache/restore@a7833574556fa59680c1b7cb190c1735db73ebf0 # v5.0.0
+        uses: https://data.forgejo.org/actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: |
             /tmp/renovate/cache/renovate/repository
@@ -43,7 +43,7 @@ jobs:
             repo-cache-
 
       - name: Restore renovate package cache
-        uses: https://data.forgejo.org/actions/cache/restore@a7833574556fa59680c1b7cb190c1735db73ebf0 # v5.0.0
+        uses: https://data.forgejo.org/actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: |
             /tmp/renovate/cache/renovate/renovate-cache-sqlite
@@ -78,7 +78,7 @@ jobs:
 
       - name: Save renovate repo cache
         if: always() && env.RENOVATE_DRY_RUN != 'full'
-        uses: https://data.forgejo.org/actions/cache/save@a7833574556fa59680c1b7cb190c1735db73ebf0 # v5.0.0
+        uses: https://data.forgejo.org/actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: |
             /tmp/renovate/cache/renovate/repository
@@ -86,7 +86,7 @@ jobs:
 
       - name: Save renovate package cache
         if: always() && env.RENOVATE_DRY_RUN != 'full'
-        uses: https://data.forgejo.org/actions/cache/save@a7833574556fa59680c1b7cb190c1735db73ebf0 # v5.0.0
+        uses: https://data.forgejo.org/actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: |
             /tmp/renovate/cache/renovate/renovate-cache-sqlite
