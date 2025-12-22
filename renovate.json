@@ -6,7 +6,7 @@
   ],
   "packageRules": [
     {
-      "description": "Auto-merge Forgejo/GitHub Actions workflow updates",
+      "description": "Auto-merge Forgejo Actions workflow updates",
       "matchFileNames": [
         ".forgejo/workflows/**"
       ],
@@ -21,7 +21,7 @@
       "automergeStrategy": "squash"
     },
     {
-      "description": "Auto-merge all dependency updates when tests pass",
+      "description": "Auto-merge minor and patch dependency updates",
       "matchUpdateTypes": [
         "minor",
         "patch"
