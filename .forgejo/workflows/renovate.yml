@@ -33,24 +33,6 @@ jobs:
       - name: print node heap
         run: /usr/local/renovate/node -e 'console.log(`node heap limit = ${require("v8").getHeapStatistics().heap_size_limit / (1024 * 1024)} Mb`)'
 
-      - name: Restore renovate repo cache
-        uses: https://data.forgejo.org/actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
-        with:
-          path: |
-            /tmp/renovate/cache/renovate/repository
-          key: repo-cache-${{ github.run_id }}
-          restore-keys: |
-            repo-cache-
-
-      - name: Restore renovate package cache
-        uses: https://data.forgejo.org/actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
-        with:
-          path: |
-            /tmp/renovate/cache/renovate/renovate-cache-sqlite
-          key: package-cache-${{ github.run_id }}
-          restore-keys: |
-            package-cache-
-
       - name: Renovate
         run: |
           renovate ${{ env.INPUT_ARGS }}
@@ -75,19 +57,3 @@ jobs:
           # use direct connection for these domains for renovate go datasource instead of the go proxy
           # allows faster lookups
           GONOPROXY: code.forgejo.org
-
-      - name: Save renovate repo cache
-        if: always() && env.RENOVATE_DRY_RUN != 'full'
-        uses: https://data.forgejo.org/actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
-        with:
-          path: |
-            /tmp/renovate/cache/renovate/repository
-          key: repo-cache-${{ github.run_id }}
-
-      - name: Save renovate package cache
-        if: always() && env.RENOVATE_DRY_RUN != 'full'
-        uses: https://data.forgejo.org/actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
-        with:
-          path: |
-            /tmp/renovate/cache/renovate/renovate-cache-sqlite
-          key: package-cache-${{ github.run_id }}
