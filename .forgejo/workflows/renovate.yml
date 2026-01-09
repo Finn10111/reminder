@@ -12,7 +12,7 @@ on:
         required: false
         type: string
 
-enable-email-notifications: true
+enable-email-notifications: false
 
 env:
   RENOVATE_DRY_RUN: ${{ ((github.event_name != 'schedule' && github.event_name != 'workflow_dispatch')) && 'full' || '' }} # dry-run on main to eleminate race condition
