@@ -21,6 +21,10 @@
       "automergeStrategy": "squash"
     },
     {
+      "matchPackageNames": ["data.forgejo.org/renovate/renovate"],
+      "schedule": ["before 3am on the first day of the month"]
+    },
+    {
       "description": "Auto-merge minor and patch dependency updates",
       "matchUpdateTypes": [
         "minor",
