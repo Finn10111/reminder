@@ -2,7 +2,7 @@ blinker==1.9.0
 click==8.3.1
 Flask==3.1.2
 Flask-WTF==1.2.2
-gunicorn==25.0.2
+gunicorn==25.0.3
 icalendar==6.3.2
 iniconfig==2.3.0
 itsdangerous==2.2.0
