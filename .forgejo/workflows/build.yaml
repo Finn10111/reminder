@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.FORGEJO_TOKEN }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: true
@@ -63,7 +63,7 @@ jobs:
           password: ${{ secrets.FORGEJO_TOKEN }}
 
       - name: Build and push arm64 image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           platforms: linux/arm64
