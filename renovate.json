@@ -21,7 +21,7 @@
       "automergeStrategy": "squash"
     },
     {
-      "matchPackageNames": ["data.forgejo.org/renovate/renovate"],
+      "matchPackageNames": ["code.forgejo.org/renovate/renovate"],
       "schedule": ["before 3am on the first day of the month"]
     },
     {
