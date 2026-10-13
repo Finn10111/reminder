@@ -5,7 +5,7 @@ jobs:
   Python-PEP8:
     runs-on: docker
     container:
-      image: python:3.14-slim
+      image: python:3.15-slim
 
     steps:
       - name: Install dependencies
