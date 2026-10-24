@@ -18,4 +18,4 @@ python-dotenv==1.2.4
 pytz==2026.5
 six==1.17.0
 Werkzeug==3.1.9
-WTForms==3.3.0
+WTForms==3.3.1
