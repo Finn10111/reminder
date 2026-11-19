@@ -1,0 +1,62 @@
+name: SBOM
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  schedule:
+  - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+jobs:
+  sbom:
+    runs-on: docker            # use a label your runner actually has
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          if ! command -v jq >/dev/null || ! command -v curl >/dev/null; then
+            apt-get update -qq
+            apt-get install -y -qq jq curl ca-certificates
+          fi
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh \
+            | sh -s -- -b /usr/local/bin
+
+      - name: Generate SBOM
+        run: |
+          syft dir:. \
+            --exclude "./.git/**" \
+            --exclude "**/node_modules/**" \
+            --exclude "**/vendor/**" \
+            -o cyclonedx-json=bom.json
+
+          # Remove license URLs that aren't valid IRIs (DT rejects the whole BOM otherwise)
+          jq 'walk(
+                if type == "object" and (.license? | type) == "object"
+                   and ((.license.url? // "") | test("^[A-Za-z][A-Za-z0-9+.-]*:[^\\s<>\"{}|\\\\^`]+$") | not)
+                then .license |= del(.url)
+                else . end
+              )' bom.json > bom.clean.json
+          mv bom.clean.json bom.json
+
+      - name: Upload to Dependency-Track
+        env:
+          DT_API_KEY: ${{ secrets.DT_API_KEY }}
+          DT_URL: ${{ vars.DT_URL }}
+          PROJECT: ${{ forgejo.repository }}
+          VERSION: ${{ forgejo.ref_name }}
+        run: |
+          curl -sS --fail-with-body -X POST "${DT_URL}/api/v1/bom" \
+            -H "X-Api-Key: ${DT_API_KEY}" \
+            -F "projectName=${PROJECT}" \
+            -F "projectVersion=${VERSION}" \
+            -F "autoCreate=true" \
+            -F "bom=@bom.json"
+
+      - name: Keep SBOM as artifact
+        uses: actions/upload-artifact@v3   # Forgejo supports v3, not v4
+        with:
+          name: sbom
+          path: bom.json
