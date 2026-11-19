@@ -47,7 +47,7 @@ jobs:
         env:
           DT_API_KEY: ${{ secrets.DT_API_KEY }}
           DT_URL: ${{ vars.DT_URL }}
-          PROJECT: ${{ forgejo.repository }}
+          PROJECT: "Forgejo: ${{ forgejo.repository }}"
           VERSION: ${{ forgejo.ref_name }}
         run: |
           curl -sS --fail-with-body -X POST "${DT_URL}/api/v1/bom" \
