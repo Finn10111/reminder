@@ -58,7 +58,7 @@ jobs:
             -F "bom=@bom.json"
 
       - name: Keep SBOM as artifact
-        uses: actions/upload-artifact@v3   # Forgejo supports v3, not v4
+        uses: actions/upload-artifact@v7   # Forgejo supports v3, not v4
         with:
           name: sbom
           path: bom.json
